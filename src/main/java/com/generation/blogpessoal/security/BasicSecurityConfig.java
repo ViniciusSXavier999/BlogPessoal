@@ -27,7 +27,7 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
 		auth.userDetailsService(userDetailsService);
 
 		auth.inMemoryAuthentication().withUser("root").password(passwordEncoder().encode("root"))
-				.authorities("ROLE_USER");
+				.authorities("ROLE_USER");         //Metodo de autenticação
 
 	}
 
@@ -45,6 +45,6 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
 				.permitAll().antMatchers(HttpMethod.OPTIONS).permitAll().anyRequest().authenticated().and().httpBasic()
 				.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().cors().and()
 				.csrf().disable();
-	}
+	}                                        //Metodo Http o que vai permitir ou não
 
 }

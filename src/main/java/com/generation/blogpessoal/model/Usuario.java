@@ -21,22 +21,39 @@ public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@NotNull
 	private String nome;
 
 	@NotNull
 	@Email(message = "O usuario deve ser um email valido existente")
 	private String usuario;
-	
+
 	@NotNull
 	private String senha;
 
 	private String foto;
-	
-	@OneToMany(mappedBy = "usuario" , cascade = CascadeType.ALL)
+
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("usuario")
 	private List<Postagem> postagem;
+
+	// Metodos construtores para testes
+	// importante seguir a mesma ordem das declarações dos atributos de usuario
+	// acima
+	// construtor cheio
+
+	public Usuario(Long id, String nome, String usuario, String senha, String foto) {
+		this.id = id;
+		this.nome = nome;
+		this.usuario = usuario;
+		this.senha = senha;
+		this.foto = foto;
+	}
+
+	// construtor vazio
+	public Usuario() {
+	}
 
 	public Long getId() {
 		return id;
@@ -85,6 +102,5 @@ public class Usuario {
 	public void setPostagem(List<Postagem> postagem) {
 		this.postagem = postagem;
 	}
-	
 
 }

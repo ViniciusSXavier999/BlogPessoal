@@ -19,7 +19,7 @@ public class UsuarioService {
 	private UsuarioRepository repository;
 
 	// função para cadastrar um usuario
-	public Optional<Usuario> cadastraUsuario(Usuario usuario) {
+	public Optional<Usuario> cadastrarUsuario(Usuario usuario) {
 		// primeiro valida se o usuário já existe no banco
 		if (repository.findByUsuario(usuario.getUsuario()).isPresent())
 			return Optional.empty();
@@ -30,15 +30,31 @@ public class UsuarioService {
 		// e por ultimo, salvo o usuario com a senha já criptografada no banco de dados
 		return Optional.of(repository.save(usuario));
 	}
+	
 
-	private String criptografarSenha(String senha) {
+	public Optional<Usuario> atualizarUsuario(Usuario usuario) {
+
+		// procurar usuario por id
+		if (repository.findById(usuario.getId()).isPresent()) {
+			// criptografar a senha nova
+			usuario.setSenha(criptografarSenha(usuario.getSenha()));
+
+			// retornar a senha cript
+			return Optional.of(repository.save(usuario));
+		}
+		return Optional.empty();
+	}
+		
+
+
+	public String criptografarSenha(String senha) {
 
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
 		return encoder.encode(senha);
 	};
 
-	public Optional<UsuarioLogin> autenticarUsuario(Optional<UsuarioLogin> usuarioLogin) {
+	public Optional<UsuarioLogin> autenticaUsuario(Optional<UsuarioLogin> usuarioLogin) {
 		Optional<Usuario> usuario = repository.findByUsuario(usuarioLogin.get().getUsuario());
 
 		if (usuario.isPresent()) {
