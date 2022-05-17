@@ -1,8 +1,6 @@
 package com.generation.blogpessoal.controller;
 
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Optional;
 
@@ -129,7 +127,6 @@ public class UsuarioControllerTest {
 	@DisplayName("Alterar um Usuário")
 	public void deveAtualizarUmUsuario() {
 
-
 		/**
 		 * Persiste um objeto da Classe Usuario no Banco de dados através do Objeto da
 		 * Classe UsuarioService e guarda o objeto persistido no Banco de Dadoas no
@@ -149,8 +146,8 @@ public class UsuarioControllerTest {
 		 * Observe que para obter o Id de forma automática, foi utilizado o método
 		 * getId() do Objeto usuarioCadastrado.
 		 */
-		Usuario usuarioUpdate = new Usuario(usuarioCadastrado.get().getId(), "Nicole souza",
-				"Nicolesouza@email.com.br", "nic123", "https://i.imgur.com/yDRVeK7.jpg");
+		Usuario usuarioUpdate = new Usuario(usuarioCadastrado.get().getId(), "Nicole souza", "Nicolesouza@email.com.br",
+				"nic123", "https://i.imgur.com/yDRVeK7.jpg");
 
 		/**
 		 * Insere o objeto da Classe Usuario (usuarioUpdate) dentro de um Objeto da
@@ -172,7 +169,7 @@ public class UsuarioControllerTest {
 		 * Requisição é igual ao Atributo Nome do Objeto da Classe Usuario Retornado no
 		 * Corpo da Resposta Se for verdadeiro, o teste passa, senão o teste falha.
 		 */
-		assertEquals(requisicao.getBody().getNome(), resposta.getBody().getNome());
+		assertEquals(usuarioUpdate.getNome(), resposta.getBody().getNome());
 
 		/**
 		 * Verifica se o Atributo Usuario do Objeto da Classe Usuario retornado no Corpo
@@ -180,7 +177,7 @@ public class UsuarioControllerTest {
 		 * Retornado no Corpo da Resposta Se for verdadeiro, o teste passa, senão o
 		 * teste falha.
 		 */
-		assertEquals(requisicao.getBody().getUsuario(), resposta.getBody().getUsuario());
+		assertEquals(usuarioUpdate.getUsuario(), resposta.getBody().getUsuario());
 
 	}
 

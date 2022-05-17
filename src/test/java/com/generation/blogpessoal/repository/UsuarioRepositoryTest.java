@@ -1,5 +1,11 @@
 package com.generation.blogpessoal.repository;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.List;
+import java.util.Optional;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -8,10 +14,6 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.Optional;
 
 import com.generation.blogpessoal.model.Usuario;
 
@@ -55,6 +57,48 @@ public class UsuarioRepositoryTest {
 		assertTrue(usuario.get().getUsuario().equals("xavier@gmail.com"));
 
 	}
+	
+	@Test
+	@DisplayName("Retorna 3 usuarios")
+	public void deveRetornarTresUsuarios() {
+
+		/**
+		 *  Executa o método findAllByNomeContainingIgnoreCase para buscar todos os usuarios cujo nome contenha
+		 *  a palavra "Silva"
+		 */
+		List<Usuario> listaDeUsuarios = repository.findAllByNomeContainingIgnoreCase("Souza");
+
+		/**
+		 * Verifica se a afirmação: "É verdade que a busca retornou 3 usuarios, cujo nome possua a palavra Silva" 
+		 * é verdadeira
+		 * Se for verdadeira, o teste passa, senão o teste falha.
+		 */
+		assertEquals(3, listaDeUsuarios.size());
+
+		/**
+		 *  Verifica se a afirmação: "É verdade que a busca retornou na primeira posição da Lista o usuario 
+		 * João da Silva" é verdadeira
+		 * Se for verdadeira, o teste passa, senão o teste falha.
+		 */
+		assertTrue(listaDeUsuarios.get(0).getNome().equals("Vinicius de Souza"));
+
+		/**
+		 *  Verifica se a afirmação: "É verdade que a busca retornou na segunda posição da Lista a usuaria 
+		 * Manuela da Silva" é verdadeira
+		 * Se for verdadeira, o teste passa, senão o teste falha.
+		 */
+		assertTrue(listaDeUsuarios.get(1).getNome().equals("Nicole de Souza"));
+
+		/**
+		 *  Verifica se a afirmação: "É verdade que a busca retornou na primeira posição da Lista a usuaria 
+		 * Adriana da Silva" é verdadeira
+		 * Se for verdadeira, o teste passa, senão o teste falha.
+		 */
+		assertTrue(listaDeUsuarios.get(2).getNome().equals("Heliane de Souza"));
+		
+	}
+	
+
 	
 	//deleta todo o banco de dados e reseta ele, e deixa ele limpo para os proximos testes.
 	@AfterAll
